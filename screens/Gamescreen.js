@@ -64,9 +64,6 @@ const GameScreen = props => {
                 <MainButton onClick={() => nextGuessHandler('greater')} ><Ionicons name='md-add' size={24} color='white' /></MainButton>
             </Card>
             <View style={style.list}>
-                {/* <ScrollView>
-                    {passedGuesses.map((guess, index) => renderListItem(guess, passedGuesses.length - index))}
-                </ScrollView> */}
                 <FlatList keyExtractor={(item) => item} data={passedGuesses} renderItem={renderListItem.bind(this, passedGuesses.length)} />
             </View>
         </View>
