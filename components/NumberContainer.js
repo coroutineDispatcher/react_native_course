@@ -12,6 +12,7 @@ const NumberContainer = props => {
 
 const styles = StyleSheet.create({
     container: {
+        alignSelf: 'center',
         borderWidth: 2,
         borderColor: Colors.accent,
         padding: 10,
