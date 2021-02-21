@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, Text, StyleSheet, Button, Platform } from 'react-native'
-import { CATEGORIES } from '../data/dummy_data'
+import { View, Text, StyleSheet, Button } from 'react-native'
+import { CATEGORIES, MEALS } from '../data/dummy_data'
 import Colors from '../constants/colors'
 
 const CategoryMealScreen = props => {
-    const categoryId = props.navigation.getParam('categoryId')
-    const selectedCategory = CATEGORIES.find(cat => cat.id === categoryId)
+    //const categoryId = props.navigation.getParam('categoryId')
+    //const displayedMeals = MEALS.filter(meal => meal.categoryIds.indexOf(categoryId))
+
     return (
         <View style={styles.screen}>
             <Text>The Categories meals screen!</Text>
@@ -24,11 +25,7 @@ CategoryMealScreen.navigationOptions = navigationData => {
     const selectedCategory = CATEGORIES.find(cat => cat.id === categoryId)
 
     return {
-        headerTitle: selectedCategory.title,
-        headerStyle: {
-            backgroundColor: Platform.OS === 'android' ? Colors.primary : ''
-        },
-        headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary
+        headerTitle: selectedCategory.title
     }
 }
 
