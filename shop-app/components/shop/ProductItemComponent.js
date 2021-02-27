@@ -1,22 +1,24 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import Colors from '../../constants/Colors'
 
 const ProcutItemComponent = props => {
     return (
-        <View style={styles.product}>
-            <View style={styles.imageContainer}>
-                <Image style={styles.image} source={{ uri: props.imageUrl }} />
+        <TouchableOpacity onPress={props.onViewDetail}>
+            <View style={styles.product}>
+                <View style={styles.imageContainer}>
+                    <Image style={styles.image} source={{ uri: props.imageUrl }} />
+                </View>
+                <View style={styles.details}>
+                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={styles.price}>{props.price.toFixed(2)}$</Text>
+                </View>
+                <View style={styles.actions}>
+                    <Button color={Colors.primary} title="View Details" onPress={props.onViewDetail} />
+                    <Button color={Colors.primary} title="To card" onPress={props.onAddToCard} />
+                </View>
             </View>
-            <View style={styles.details}>
-                <Text style={styles.title}>{props.title}</Text>
-                <Text style={styles.price}>{props.price.toFixed(2)}$</Text>
-            </View>
-            <View style={styles.actions}>
-                <Button color={Colors.primary} title="View Details" onPress={props.onViewDetail} />
-                <Button color={Colors.primary} title="To card" onPress={props.onAddToCard} />
-            </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 

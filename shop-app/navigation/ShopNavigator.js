@@ -3,15 +3,19 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import ProductOverviewScreen from '../screens/shop/ProductOverviewScreen'
 import Colors from '../constants/Colors'
+import ProductDetailsScreen from '../screens/shop/ProductDetailsScreen'
+import CardScreen from '../screens/shop/CardScreen'
 
 const productsNavigator = createStackNavigator({
-    ProductsOverview: ProductOverviewScreen
+    ProductsOverview: ProductOverviewScreen,
+    ProductDetail: ProductDetailsScreen,
+    Card: CardScreen
 }, {
     defaultNavigationOptions: {
         headerStyle: {
-            backgroundColor: Colors.primary
+            backgroundColor: 'white'
         },
-        headerTintColor: 'white'
+        headerTintColor: Colors.primary
     }
 });
 
