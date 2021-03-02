@@ -1,0 +1,7 @@
+import Product from "../../model/product"
+
+export const DELETE_PRODUCT = "DELETE_PRODUCT"
+
+export const deleteProduct = productId => {
+    return { type: DELETE_PRODUCT, productId: productId }
+}

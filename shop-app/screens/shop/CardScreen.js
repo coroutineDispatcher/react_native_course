@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
 import CardItemComponent from '../../components/shop/CardItemComponent'
 import * as cardActions from '../../store/actions/card-action'
+import * as ordersAction from '../../store/actions/orders-action'
 
 const CardScreen = props => {
     const cardTotalAmmount = useSelector(state => state.card.totalAmmount)
@@ -26,8 +27,10 @@ const CardScreen = props => {
         <View style={styles.screenHolder}>
             <View style={styles.screen}>
                 <View style={styles.summary}>
-                    <Text style={styles.summaryText}>Total: <Text style={styles.ammountText}>${cardTotalAmmount.toFixed(2)}</Text></Text>
-                    <Button color={Colors.accent} title='Order now' disabled={cardItems.length === 0} />
+                    <Text style={styles.summaryText}>Total: <Text style={styles.ammountText}>${Math.round(cardTotalAmmount.toFixed(2) * 100) / 100}</Text></Text>
+                    <Button color={Colors.accent} title='Order now' disabled={cardItems.length === 0} onPress={() => {
+                        dispatch(ordersAction.addOrder(cardItems, cardTotalAmmount))
+                    }} />
                 </View>
                 <FlatList data={cardItems} keyExtractor={item => item.productId} renderItem={itemData =>
                     <CardItemComponent
@@ -35,12 +38,17 @@ const CardScreen = props => {
                         title={itemData.item.productTitle}
                         ammount={itemData.item.sum}
                         onRemove={() => dispatch(cardActions.removeFromCard(itemData.item.productId))}
+                        deletable
                     />
                 }
                 />
             </View>
         </View>
     )
+};
+
+CardScreen.navigationOptions = {
+    headerTitle: 'Your card'
 }
 
 const styles = StyleSheet.create({
