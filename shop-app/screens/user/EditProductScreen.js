@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, TextInput, StyleSheet, ScrollView, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../../components/UI/HeaderButton';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import * as productAction from '../../store/actions/products-action'
 
 const EditProductScreen = props => {
     const productId = props.navigation.getParam('productId');
@@ -13,9 +14,22 @@ const EditProductScreen = props => {
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState(editedProduct ? editedProduct.description : '');
 
-    if (productId) {
+    const dispatch = useDispatch()
 
-    }
+    const submitHandler = useCallback(() => {
+        if (editedProduct) {
+            console.log('Updating')
+            dispatch(productAction.updateProduct(productId, title, description, imageUrl))
+        } else {
+            console.log('Inserting')
+            dispatch(productAction.createProduct(title, description, imageUrl, +price))
+        }
+        props.navigation.goBack()
+    }, [dispatch, productId, title, description, imageUrl, price])
+
+    useEffect(() => {
+        props.navigation.setParams({ submit: submitHandler })
+    }, [submitHandler])
 
     return (
         <ScrollView style={styles.formScroll}>
@@ -42,6 +56,7 @@ const EditProductScreen = props => {
 };
 
 EditProductScreen.navigationOptions = navData => {
+    const submitFunction = navData.navigation.getParam('submit')
     return {
         headerTitle: navData.navigation.getParam('productId') ? 'EditProduct' : 'Add new product',
         headerRight: () => (
@@ -49,7 +64,7 @@ EditProductScreen.navigationOptions = navData => {
                 <Item
                     title='Save'
                     iconName='ios-save'
-                    onPress={() => { }}
+                    onPress={() => submitFunction()}
                 />
             </HeaderButtons>
         )
